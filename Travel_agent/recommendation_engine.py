@@ -36,6 +36,9 @@ def recommend_by_budget(df, budget):
         temp_df["Total Cost"] <= budget
     ]
 
+    if filtered.empty:
+        return pd.Series(name="Total Cost", dtype=float)
+
     recommendations = (
         filtered.groupby("Destination")
         ["Total Cost"]
@@ -70,6 +73,9 @@ def cheapest_destinations(df):
         +
         temp_df["Transportation cost"]
     )
+
+    if temp_df.empty:
+        return pd.Series(name="Total Cost", dtype=float)
 
     cheapest = (
         temp_df.groupby("Destination")

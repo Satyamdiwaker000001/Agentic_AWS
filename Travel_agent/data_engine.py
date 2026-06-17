@@ -115,6 +115,31 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
         if column in df.columns:
             df[column] = df[column].fillna(0)
 
+    # Clean cost columns
+    cost_columns = [
+        "Accommodation cost",
+        "Transportation cost"
+    ]
+
+    for column in cost_columns:
+
+        if column in df.columns:
+
+            df[column] = (
+                df[column]
+                .astype(str)
+                .str.replace("$", "", regex=False)
+                .str.replace(",", "", regex=False)
+                .str.strip()
+            )
+
+            df[column] = pd.to_numeric(
+                df[column],
+                errors="coerce"
+            )
+
+            df[column] = df[column].fillna(0)
+
     cleaned_rows = len(df)
 
     print("\n[CLEANING COMPLETE]")
@@ -123,34 +148,6 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-
-# ============================================================
-# COST COLUMN CLEANING
-# ============================================================
-
-cost_columns = [
-    "Accommodation cost",
-    "Transportation cost"
-]
-
-for column in cost_columns:
-
-    if column in df.columns:
-
-        df[column] = (
-            df[column]
-            .astype(str)
-            .str.replace("$", "", regex=False)
-            .str.replace(",", "", regex=False)
-            .str.strip()
-        )
-
-        df[column] = pd.to_numeric(
-            df[column],
-            errors="coerce"
-        )
-
-        df[column] = df[column].fillna(0)
 
 # ============================================================
 # TESTING
