@@ -5,6 +5,7 @@
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
+import os
 
 
 # ============================================================
@@ -87,9 +88,14 @@ def load_embedding_model():
 
 def build_vectorstore(documents):
     """
-    Create Chroma Vector Database.
+    Create Chroma Vector Database or load if exists.
     """
+    
+    if os.path.exists(VECTOR_DB_PATH) and os.listdir(VECTOR_DB_PATH):
+        print("[INFO] Loading existing ChromaDB...")
+        return load_vectorstore()
 
+    print("[INFO] Creating new ChromaDB...")
     embeddings = load_embedding_model()
 
     vectorstore = Chroma.from_documents(
@@ -145,7 +151,7 @@ if __name__ == "__main__":
         clean_dataset
     )
 
-    FILE_PATH = "Travel_agent/Travel details dataset.csv"
+    FILE_PATH = "Travel details dataset.csv"
 
     df = load_dataset(FILE_PATH)
 
