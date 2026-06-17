@@ -15,7 +15,7 @@ from rag_engine import retrieve_documents
 # CONFIG
 # ============================================================
 
-MODEL_NAME = "HuggingFaceTB/SmolLM2-1.7B-Instruct"
+MODEL_NAME = "HuggingFaceTB/SmolLM2-135M-Instruct"
 
 _llm = None
 
@@ -66,37 +66,31 @@ def ask_travel_ai(query):
     """
     RAG Question Answering
     """
+    try:
+        llm = load_llm()
 
-    llm = load_llm()
+        documents = retrieve_documents(
+            query=query,
+            k=5
+        )
 
-    documents = retrieve_documents(
-        query=query,
-        k=5
-    )
+        context = "\n\n".join(
+            [doc.page_content for doc in documents]
+        )
 
-    context = "\n\n".join(
-        [doc.page_content for doc in documents]
-    )
+        messages = [
+            {"role": "system", "content": "You are a professional travel assistant. Use ONLY the provided context to answer the user's question."},
+            {"role": "user", "content": f"CONTEXT:\n{context}\n\nQUESTION:\n{query}"}
+        ]
 
-    prompt = f"""
-You are a professional travel assistant.
+        result = llm(messages)
 
-Use ONLY the provided context.
+        answer = result[0]["generated_text"][-1]["content"]
 
-CONTEXT:
-{context}
-
-QUESTION:
-{query}
-
-ANSWER:
-"""
-
-    result = llm(prompt)
-
-    answer = result[0]["generated_text"]
-
-    return answer
+        return answer
+    except Exception as e:
+        print(f"[ERROR] AI Generation failed: {e}")
+        return "Sorry, an error occurred while generating the response."
 
 
 # ============================================================

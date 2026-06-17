@@ -3,6 +3,7 @@
 # ============================================================
 
 import streamlit as st
+import pandas as pd
 
 from data_engine import (
     load_dataset,
@@ -42,6 +43,97 @@ st.set_page_config(
     page_icon="✈️",
     layout="wide"
 )
+
+# ============================================================
+# CUSTOM CSS STYLING
+# ============================================================
+
+st.markdown("""
+<style>
+/* Animated Gradient Background */
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg, #0b0c10, #1f2833, #0b0c10, #45a29e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #c5c6c7;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background: rgba(11, 12, 16, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(102, 252, 241, 0.2);
+}
+
+/* Metric Cards */
+div[data-testid="metric-container"] {
+    background: rgba(31, 40, 51, 0.6);
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease-in-out;
+}
+
+div[data-testid="metric-container"]:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: #66fcf1;
+    box-shadow: 0 8px 32px 0 rgba(102, 252, 241, 0.2);
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #66fcf1 !important;
+    font-family: 'Inter', sans-serif;
+    text-shadow: 0px 0px 8px rgba(102, 252, 241, 0.4);
+}
+
+/* Buttons */
+.stButton>button {
+    background: linear-gradient(90deg, #45a29e, #66fcf1);
+    color: #0b0c10 !important;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 2rem;
+    transition: all 0.3s ease;
+}
+
+.stButton>button:hover {
+    background: linear-gradient(90deg, #66fcf1, #45a29e);
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.6);
+    transform: scale(1.05);
+}
+
+/* Text area and inputs */
+.stTextInput>div>div>input, .stTextArea>div>div>textarea, .stNumberInput>div>div>input, .stSelectbox>div>div>div {
+    background-color: rgba(31, 40, 51, 0.7) !important;
+    color: white !important;
+    border: 1px solid rgba(102, 252, 241, 0.3) !important;
+    border-radius: 8px;
+}
+
+.stTextInput>div>div>input:focus, .stTextArea>div>div>textarea:focus {
+    border-color: #66fcf1 !important;
+    box-shadow: 0 0 8px rgba(102, 252, 241, 0.5) !important;
+}
+
+/* Success/Warning messages */
+.stAlert {
+    background-color: rgba(31, 40, 51, 0.8) !important;
+    border: 1px solid rgba(102, 252, 241, 0.5) !important;
+    color: white !important;
+    border-radius: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ============================================================
 # LOAD DATA
@@ -119,47 +211,49 @@ page = st.sidebar.radio(
 
 if page == "Dashboard":
 
-    st.header("📊 Dashboard")
+    st.header("📊 Executive Dashboard")
+    st.markdown("Overview of travel data and key metrics.")
 
     stats = dashboard_statistics(df)
 
-    col1, col2, col3 = st.columns(3)
-
+    # Top Row Metrics
+    col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.metric(
-            "Total Records",
-            stats["total_records"]
-        )
-
+        st.metric("Total Trips", stats["total_records"])
     with col2:
-        st.metric(
-            "Destinations",
-            stats["total_destinations"]
-        )
-
+        st.metric("Destinations", stats["total_destinations"])
     with col3:
-        st.metric(
-            "Average Duration",
-            stats["average_duration"]
-        )
-
-    col4, col5 = st.columns(2)
-
+        st.metric("Avg Accom. Cost", f"${stats['average_accommodation_cost']}")
     with col4:
-        st.metric(
-            "Avg Accommodation Cost",
-            stats["average_accommodation_cost"]
-        )
+        st.metric("Avg Transport Cost", f"${stats['average_transportation_cost']}")
 
-    with col5:
-        st.metric(
-            "Avg Transportation Cost",
-            stats["average_transportation_cost"]
-        )
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    st.subheader("Dataset Preview")
+    # Middle Row Charts
+    col_a, col_b = st.columns(2)
 
-    st.dataframe(df.head())
+    with col_a:
+        st.subheader("📍 Top 10 Most Visited Destinations")
+        top_dest = df['Destination'].value_counts().head(10)
+        st.bar_chart(top_dest, color="#66fcf1")
+
+    with col_b:
+        st.subheader("👥 Traveler Gender Distribution")
+        gender_dist = df['Traveler gender'].value_counts()
+        st.bar_chart(gender_dist, color="#45a29e")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Bottom Row Chart
+    st.subheader("💰 Average Total Cost by Destination (Top 10)")
+    temp_df = df.copy()
+    temp_df["Total Cost"] = pd.to_numeric(temp_df["Accommodation cost"], errors='coerce').fillna(0) + pd.to_numeric(temp_df["Transportation cost"], errors='coerce').fillna(0)
+    avg_cost = temp_df.groupby('Destination')['Total Cost'].mean().sort_values(ascending=False).head(10)
+    st.bar_chart(avg_cost, color="#ff007f")
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    with st.expander("🔍 View Raw Dataset"):
+        st.dataframe(df, width='stretch')
 
 # ============================================================
 # TRAVEL AI
@@ -243,9 +337,12 @@ elif page == "Recommendations":
             budget
         )
 
-        st.dataframe(
-            recommendations.reset_index()
-        )
+        if recommendations.empty:
+            st.warning("No destinations found within this budget.")
+        else:
+            st.dataframe(
+                recommendations.reset_index()
+            )
 
 # ============================================================
 # COST PREDICTION
