@@ -1,0 +1,6 @@
+SpeechRecognition
+pyaudio
+pyttsx3
+torch
+transformers
+accelerate
