@@ -503,6 +503,21 @@ Agentic_AWS/
 
 ---
 
+## 📄 YAML Summary File
+
+A cleaner YAML summary is available at `README.yml`.
+
+This file contains the same structured project details, models, and explanations in an easy-to-read format.
+
+---
+
+## 🔧 Notes
+
+- Use `README.yml` for structured configuration and quick reference.
+- Use `README.md` for narrative details and project overview.
+
+---
+
 ## 🎯 Key Technologies & Libraries
 
 - **LLM Frameworks**: LangChain, Transformers, Sentence Transformers

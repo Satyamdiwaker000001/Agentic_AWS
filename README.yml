@@ -1,0 +1,403 @@
+project: Agentic AWS
+project_description: "A collection of AI agents, RAG systems, and machine learning projects built with Python. This file summarizes each workspace, the models used, and why those models were chosen."
+
+projects:
+  - name: Attendance Agent
+    path: Attendece_agent/
+    purpose: Automated attendance analysis and fine calculation system
+    models_and_technologies:
+      - Pandas
+      - Scikit-learn
+      - CSV processing
+    why:
+      - No LLM required for rule-based attendance analysis
+      - Lightweight and fast for tabular data
+      - Generates reports and fine calculations efficiently
+    key_features:
+      - Parses attendance records for 2023-2024
+      - Calculates employee fines
+      - Produces safe and danger employee reports
+
+  - name: Day-5 Embedding
+    path: Day-5/Embedding/
+    purpose: Semantic memory and retrieval system
+    models_and_technologies:
+      - sentence-transformers/all-MiniLM-L6-v2
+      - Sentence Transformers framework
+      - Pickle-based vector storage
+    why:
+      - Fast CPU inference for semantic similarity
+      - Strong balance of speed and accuracy
+      - Good for memory retrieval and embedding tasks
+    key_features:
+      - Encodes user queries and memories as vectors
+      - Retrieves relevant memories using semantic search
+      - Stores vectors persistently
+
+  - name: Interview Agent
+    path: Interview_agent/
+    purpose: AI interview assistant with speech and resume analysis
+    models_and_technologies:
+      - RAG components for resume-based context
+      - Text-to-Speech (TTS) and Speech-to-Text (STT)
+      - FAISS vector store
+      - pypdf resume parsing
+    why:
+      - RAG supports context-aware interview responses
+      - Speech adds natural interaction
+      - FAISS provides fast similarity search
+    key_features:
+      - Resume-based question answering
+      - Real-time speech interaction
+      - Document embedding and retrieval
+
+  - name: LangChain RAG Chatbot
+    path: LangChain_models/rag-chatbot/
+    purpose: Document question-answering using retrieval-augmented generation
+    models_and_technologies:
+      embeddings:
+        model: BAAI/bge-small-en-v1.5
+        library: LangChain + HuggingFaceEmbeddings
+      llm:
+        model: HuggingFaceTB/SmolLM2-360M-Instruct
+        framework: Transformers pipeline
+        settings:
+          max_new_tokens: 100
+          temperature: 0.1
+      vector_store: FAISS
+      text_processing:
+        - RecursiveCharacterTextSplitter with chunk_size=300 and chunk_overlap=50
+        - Document support: PDF, DOCX, TXT
+    why:
+      - BGE embeddings are strong for document retrieval
+      - SmolLM2 is lightweight and instruction-capable
+      - FAISS enables fast search on text embeddings
+      - LangChain simplifies RAG architecture
+    key_features:
+      - Upload documents and build a vector store
+      - Ask questions about uploaded documents
+      - Streamlit web interface
+
+  - name: Resume Analyzer
+    path: Resume_Analyser/
+    purpose: Compare resumes with job descriptions using semantic similarity
+    models_and_technologies:
+      - all-MiniLM-L6-v2 (Sentence Transformers)
+      - Cosine similarity scoring
+      - pypdf for PDF extraction
+    why:
+      - Lightweight embedding model suitable for offline analysis
+      - Good semantic matching for resume and job description text
+      - Cosine similarity yields clear ranking scores
+    key_features:
+      - Parse multiple resume PDFs
+      - Encode resumes and job descriptions into vectors
+      - Rank resumes by similarity score
+
+  - name: ResumePilot AI
+    path: ResumePilot_AI/
+    purpose: Full-stack resume scoring and ATS optimization platform
+    subprojects:
+      backend:
+        path: ResumePilot_AI/Backend/
+        technologies:
+          - FastAPI
+          - Pydantic validation
+          - PDF/DOCX file handling
+          - SQLite support
+        why:
+          - High-performance async API framework
+          - Built-in API docs and validation
+          - Easy future integration with LLM services
+      frontend:
+        path: ResumePilot_AI/Frontend/
+        technologies:
+          - React + Vite
+          - Tailwind CSS
+          - Framer Motion
+          - Axios
+        why:
+          - Fast frontend development
+          - Responsive UI design
+          - Smooth user experience with animation
+    key_features:
+      - Resume upload and JD matching
+      - ATS score predictions
+      - Skill gap analysis
+      - Real-time feedback
+
+  - name: Buffer Memory
+    path: buffer_memory/
+    purpose: Simple conversational memory storage
+    models_and_technologies:
+      - Python classes for memory handling
+      - Text file persistence
+    why:
+      - Lightweight memory tracking for chatbots
+      - Simple storage and retrieval
+    key_features:
+      - Save and retrieve conversation history
+      - Persist memory across sessions
+
+  - name: PDF Summary
+    path: pdf_summary/
+    purpose: Summarize PDF documents automatically
+    models_and_technologies:
+      - Transformers-based summarization models
+      - pypdf text extraction
+      - Document chunking
+    why:
+      - Summarization requires document extraction and chunking
+      - Persistent storage lets summaries be reused
+    key_features:
+      - Extract text from PDFs
+      - Generate concise summaries
+      - Save summaries to memory file
+
+  - name: Resume Chatbot
+    path: resume_chatbot/
+    purpose: Interactive chatbot built around resume data
+    models_and_technologies:
+      - Resume text parsing
+      - Context retention
+    why:
+      - Conversational agents need context-aware resume access
+      - Useful for answering resume-specific questions
+    key_features:
+      - Resume Q&A
+      - Experience extraction
+      - Context-based responses
+
+  - name: Summary Memory
+    path: summary_memory/
+    purpose: Document summarization with persistent memory
+    models_and_technologies:
+      - facebook/bart-large-cnn
+      - Transformers (Hugging Face)
+      - PDF, TXT, DOCX, CSV support
+      - Recursive text splitting
+    why:
+      - BART CNN is optimized for high-quality abstractive summaries
+      - Good for structured document summarization
+    configuration:
+      chunk_size: 3000
+      max_summary_length: 200
+      min_summary_length: 50
+    key_features:
+      - Multi-format summarization
+      - Persistent summary storage
+      - Chunk-based processing
+
+  - name: Summary Memory Bot
+    path: summary_memory_bot/
+    purpose: Conversation-style summary generation
+    models_and_technologies:
+      - Memory management
+      - Conversational interface
+      - Summarization pipeline
+    why:
+      - Chat interface makes summarization interactive
+      - Memory persistence improves follow-up queries
+    key_features:
+      - Interactive summarization chat
+      - Memory persistence
+
+  - name: Window Memory
+    path: window_memory/
+    purpose: Sliding window conversation memory
+    models_and_technologies:
+      - Window-based storage
+      - Configurable size
+      - Text persistence
+    why:
+      - Maintains context without growing indefinitely
+      - Efficient for longer conversations
+    key_features:
+      - Fixed-size sliding window
+      - Context preservation
+
+  - name: Practice AI Research Agent
+    path: Practice/ai_research_agent/
+    purpose: ReAct agent for research tasks
+    models_and_technologies:
+      - ReAct reasoning framework
+      - Tool integration for search and data gathering
+      - Conversation state management
+    why:
+      - ReAct combines reasoning and action
+      - Useful for complex, multi-step tasks
+    key_features:
+      - Autonomous research execution
+      - Reasoning logs
+      - Report generation
+
+  - name: Practice Text-to-Speech
+    path: Practice/Text_to_speech/
+    purpose: Text-to-speech synthesis demo
+    models_and_technologies:
+      - gTTS or similar speech engine
+      - Audio file generation
+    why:
+      - Converts text into voice output
+      - Useful for accessibility and voice interfaces
+    key_features:
+      - Generate spoken audio from text
+      - Support multiple languages
+
+architecture_patterns:
+  rag:
+    description: "Retrieval-Augmented Generation flow for document QA and context-aware answers."
+    flow: "Document → Chunk → Embed → Store → Query → Retrieve → LLM → Answer"
+    used_in:
+      - LangChain RAG Chatbot
+      - Interview Agent
+      - Resume Analyzer
+  memory_systems:
+    - name: Buffer Memory
+      purpose: Simple conversation history tracking
+    - name: Window Memory
+      purpose: Sliding window context maintenance
+    - name: Summary Memory
+      purpose: Long-term compressed memory storage
+
+model_selection_guide:
+  embedding_models:
+    - name: sentence-transformers/all-MiniLM-L6-v2
+      best_for: Resume matching, semantic search, and local embedding workloads
+      benefits:
+        - Lightweight
+        - Fast on CPU
+        - Good semantic accuracy
+    - name: BAAI/bge-small-en-v1.5
+      best_for: Document retrieval and high-performance semantic search
+      benefits:
+        - Strong retrieval quality
+        - Good performance
+  summarization_models:
+    - name: facebook/bart-large-cnn
+      best_for: News and high-quality abstractive summaries
+    - name: T5
+      best_for: General summarization and multilingual support
+  llm_models:
+    - name: HuggingFaceTB/SmolLM2-360M-Instruct
+      best_for: Lightweight local question-answering
+    - name: Claude / GPT-4
+      best_for: Complex reasoning and production use cases
+    - name: Llama 2
+      best_for: Open-source self-hosted deployment
+
+api_usage:
+  - name: Practice AI Research Agent
+    path: Practice/ai_research_agent/
+    api: OpenAI API
+    package: openai
+    environment_variables:
+      - OPENAI_API_KEY
+      - OPENAI_BASE_URL
+      - MODEL_NAME
+    default_model: gemini-2.5-flash
+    notes: "This agent uses the OpenAI-compatible client for chat completions and can target any supported model via MODEL_NAME."
+  - name: LangChain RAG Chatbot
+    path: LangChain_models/rag-chatbot/
+    api: Local Hugging Face model loading
+    package:
+      - transformers
+      - langchain_huggingface
+    model_names:
+      - BAAI/bge-small-en-v1.5
+      - HuggingFaceTB/SmolLM2-360M-Instruct
+    notes: "These models are loaded locally through Hugging Face model names, not through a remote HF API call in the code."
+  - name: Summary Memory
+    path: summary_memory/
+    api: Local Hugging Face transformers
+    package: transformers
+    model_name: facebook/bart-large-cnn
+    notes: "Summarization uses the Hugging Face model locally via transformers."
+  - name: Embedding models
+    usage:
+      - path: Day-5/Embedding/
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+      - path: Interview_agent/rag/vector_store.py
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+      - path: Resume_Analyser/main.py
+        model_name: all-MiniLM-L6-v2
+      - path: resume_chatbot/app.py
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+    notes: "All embedding models use local Sentence Transformers loading from Hugging Face model repositories."
+
+running_projects:
+  prerequisites:
+    - Python 3.8+
+    - Virtual environment
+    - Git
+  install_steps:
+    - git clone https://github.com/Satyamdiwaker000001/Agentic_AWS.git
+    - cd Agentic_AWS
+    - python -m venv .venv
+    - source .venv/bin/activate # On Windows: .venv\\Scripts\\activate
+    - pip install -r requirements.txt
+  commands:
+    Resume Analyzer: |
+      cd Resume_Analyser
+      python main.py
+    RAG Chatbot: |
+      cd LangChain_models/rag-chatbot
+      streamlit run streamlit_app.py
+    ResumePilot AI: |
+      # Backend
+      cd ResumePilot_AI/Backend
+      python -m uvicorn app.main:app --reload
+      # Frontend
+      cd ResumePilot_AI/Frontend
+      npm install
+      npm run dev
+    Attendance Agent: |
+      cd Attendece_agent
+      python main.py
+
+configuration_files:
+  - Day-5/Embedding/config.py
+  - summary_memory/config.py
+  - LangChain_models/rag-chatbot/src/llm.py
+  - .env
+
+project_structure:
+  - Attendece_agent/: Attendance analysis system
+  - Day-5/Embedding/: Semantic memory system
+  - Interview_agent/: RAG-based interview system
+  - LangChain_models/: RAG chatbot implementation
+  - Practice/: Experimental agents and demos
+  - ResumePilot_AI/: Full-stack resume platform
+  - Resume_Analyser/: Resume-JD matching
+  - buffer_memory/: Simple memory system
+  - pdf_summary/: PDF summarization
+  - summary_memory/: Advanced memory with summaries
+  - window_memory/: Sliding window memory system
+
+key_technologies:
+  - LangChain
+  - Transformers
+  - Sentence Transformers
+  - FAISS
+  - FastAPI
+  - Streamlit
+  - React
+  - pandas
+  - PyPDF
+  - docx2txt
+  - gTTS
+  - speech_recognition
+  - Tailwind CSS
+  - Framer Motion
+
+future_enhancements:
+  - Integrate production LLMs such as Claude, GPT-4, or AWS Bedrock
+  - Add multi-language support across agents
+  - Add semantic deduplication in memory systems
+  - Support real-time streaming responses
+  - Add authentication and user roles
+  - Deploy to AWS services
+
+author:
+  name: Satyam Diwaker
+  github: https://github.com/Satyamdiwaker000001
