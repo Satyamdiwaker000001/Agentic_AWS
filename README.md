@@ -154,6 +154,16 @@ Below is a detailed overview of every project included in this repository. Click
 
 ---
 
+### 16. [Voice Calculator](./Voice_Calculator/)
+
+**Purpose:** AI-powered voice command calculator  
+**Models & Technologies:**
+- **LLM**: `Qwen/Qwen2.5-0.5B-Instruct`
+- **Audio Processing**: SpeechRecognition, pyttsx3
+- **Why This Architecture**: A local, fast LLM handles complex and messy voice command inputs reliably, replacing brittle string-matching logic for evaluating mathematical intent natively on CPU/GPU.
+
+---
+
 ## 🏗️ Architecture Patterns & Insights
 
 ### RAG (Retrieval-Augmented Generation)
@@ -176,6 +186,7 @@ Used heavily in projects like **RAG Chatbot**, **Interview Agent**, **Resume Ana
 | **`gemini-2.5-flash`** | LLM | AI Research Agent | Excellent tool-calling and reasoning for ReAct patterns. |
 | **`bart-large-cnn`** | LLM (Seq2Seq) | Summary Memory | High-quality abstractive document summarization. |
 | **`llama_cpp`** | LLM | Interview Agent | Local, privacy-first conversational capabilities. |
+| **`Qwen2.5-0.5B`** | LLM | Voice Calculator | High-speed math parsing from transcribed voice logic. |
 | **GPT-4 / Claude / Bedrock** | LLM APIs | ResumePilot AI | Complex reasoning and production-grade deployments. |
 
 ---
