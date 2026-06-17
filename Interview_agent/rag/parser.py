@@ -1,3 +1,4 @@
+# PDF parser module
 import fitz
 
 def extract_text(pdf_path):
