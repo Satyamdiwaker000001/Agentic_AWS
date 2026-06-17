@@ -1,0 +1,14 @@
+User likes Python
+
+User is learning Agentic AI
+
+User wants to build RAG chatbot
+
+User knows FastAPI
+
+User is interested in Machine Learning
+
+User built an Attendance AI Agent
+
+User is working on Resume Analyzer project2
+5

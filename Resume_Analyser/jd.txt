@@ -1,0 +1,9 @@
+Python Developer
+
+Skills:
+Python
+FastAPI
+SQL
+Docker
+Git
+REST APIs
