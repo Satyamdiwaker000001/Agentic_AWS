@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # Text-to-speech module
+=======
+>>>>>>> 55bc406af10422dd432efd8c0770f112a2d3afdf
 from gtts import gTTS
 import os
 import time

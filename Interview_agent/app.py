@@ -9,6 +9,7 @@ from llm.interviewer import (
 
 from speech.recorder import record_audio
 from speech.stt import transcribe
+from speech.tts import speak
 
 resume = extract_text(
     "resumes/resume.pdf"
@@ -30,8 +31,10 @@ while True:
 
     print(question)
 
-    # TTS later
+    # Speak the question aloud
+    speak(question)
 
+    print("Recording answer for 20 seconds...")
     record_audio(
         "audio/answer.wav",
         duration=20
