@@ -7,6 +7,7 @@ import os
 from parsers.file_parser import FileParser
 from chunkers.fixed_chunker import FixedChunker
 from chunkers.recursive_chunker import RecursiveChunker
+from chunkers.semantic_chunker import SemanticChunker
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -101,6 +102,39 @@ async def recursive_chunking(
 
     return {
         "method": "recursive",
+        "total_chunks": len(chunks),
+        "chunks": chunks
+    }
+
+@app.post("/chunk/semantic")
+async def semantic_chunking(
+    file: UploadFile = File(...)
+):
+
+    filename = file.filename or "uploaded_file.txt"
+
+    path = os.path.join(
+        UPLOAD_DIR,
+        filename
+    )
+
+    with open(path, "wb") as f:
+        f.write(await file.read())
+
+    try:
+        text = FileParser.extract_text(path)
+    except ValueError as e:
+        return {
+            "error": str(e),
+            "supported_types": FileParser.get_supported_types()
+        }
+
+    chunker = SemanticChunker()
+
+    chunks = chunker.chunk(text)
+
+    return {
+        "method": "semantic",
         "total_chunks": len(chunks),
         "chunks": chunks
     }

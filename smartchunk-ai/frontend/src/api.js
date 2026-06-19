@@ -4,7 +4,11 @@ export const uploadFileForChunking = async (file, method) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const endpoint = method === 'fixed' ? '/chunk/fixed' : '/chunk/recursive';
+  const endpoint = method === 'fixed' 
+    ? '/chunk/fixed' 
+    : method === 'semantic'
+      ? '/chunk/semantic'
+      : '/chunk/recursive';
   
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
