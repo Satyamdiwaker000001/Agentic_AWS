@@ -259,7 +259,6 @@ npm run dev
 ```bash
 # Terminal 1 - Backend
 cd smartchunk-ai
-.\venv\Scripts\activate  # On Windows
 python -m uvicorn app:app --reload
 
 # Terminal 2 - Frontend
