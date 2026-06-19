@@ -3,3 +3,5 @@ uvicorn
 pymupdf
 python-multipart
 python-docx
+sentence-transformers
+scikit-learn
