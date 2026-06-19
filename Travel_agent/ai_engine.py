@@ -101,22 +101,21 @@ def recommend_trip(
     budget,
     duration,
     male_count,
-    female_count
+    female_count,
+    group_type
 ):
     """
     Generate recommendation using RAG context.
     """
 
     query = f"""
-Suggest a trip.
+Act as a professional travel agent. 
+Plan a trip for a group consisting of {male_count} male(s) and {female_count} female(s). 
+The group is traveling as: {group_type}.
+Suggest activities and destinations that would be perfect for this specific type of relationship/group.
 
-Budget: {budget}
-
+Budget: ${budget}
 Duration: {duration} days
-
-Male Travelers: {male_count}
-
-Female Travelers: {female_count}
 """
 
     return ask_travel_ai(query)
