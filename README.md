@@ -164,6 +164,16 @@ Below is a detailed overview of every project included in this repository. Click
 
 ---
 
+### 17. [SmartChunk AI](./smartchunk-ai/)
+
+**Purpose:** Intelligent Document Parsing & Chunking Engine  
+**Models & Technologies:**
+- **Model**: `sentence-transformers/all-MiniLM-L6-v2` (for Semantic Chunking)
+- **Frameworks**: FastAPI (Backend), Vite + React (Frontend)
+- **Why This Architecture**: Provides fixed-size, recursive, and semantic text chunking algorithms crucial for robust Retrieval-Augmented Generation (RAG) pipelines, with a modern, glassmorphism UI for testing.
+
+---
+
 ## 🏗️ Architecture Patterns & Insights
 
 ### RAG (Retrieval-Augmented Generation)
@@ -179,7 +189,7 @@ Used heavily in projects like **RAG Chatbot**, **Interview Agent**, **Resume Ana
 
 | Model | Type | Used In | Characteristics |
 | :--- | :--- | :--- | :--- |
-| **`all-MiniLM-L6-v2`** | Embeddings | Day-5, Resume Analyzer, Travel Agent | Lightweight (22MB), fast CPU inference, good for general similarity. |
+| **`all-MiniLM-L6-v2`** | Embeddings | Day-5, Resume Analyzer, Travel Agent, SmartChunk AI | Lightweight (22MB), fast CPU inference, good for general similarity. |
 | **`bge-small-en-v1.5`** | Embeddings | LangChain RAG Chatbot | Maximum accuracy for document retrieval. |
 | **`SmolLM2-360M`** | LLM | LangChain RAG Chatbot | Ultra-lightweight instruction-following. |
 | **`SmolLM2-1.7B`** | LLM | Travel Agent | Stronger reasoning capabilities while remaining local. |
@@ -241,6 +251,19 @@ python -m uvicorn app.main:app --reload
 
 # Terminal 2 - Frontend
 cd ResumePilot_AI/Frontend
+npm install
+npm run dev
+```
+
+**SmartChunk AI (Full-Stack):**
+```bash
+# Terminal 1 - Backend
+cd smartchunk-ai
+.\venv\Scripts\activate  # On Windows
+python -m uvicorn app:app --reload
+
+# Terminal 2 - Frontend
+cd smartchunk-ai/frontend
 npm install
 npm run dev
 ```
