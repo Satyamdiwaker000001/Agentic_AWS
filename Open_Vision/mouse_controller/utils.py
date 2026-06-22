@@ -1,0 +1,14 @@
+import math
+import numpy as np
+
+
+def distance(x1, y1, x2, y2):
+    return math.hypot(x2 - x1, y2 - y1)
+
+
+def map_value(value, in_min, in_max, out_min, out_max):
+    return np.interp(
+        value,
+        (in_min, in_max),
+        (out_min, out_max)
+    )

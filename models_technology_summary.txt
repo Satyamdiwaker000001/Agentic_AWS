@@ -1,0 +1,84 @@
+1. Attendance Agent
+   Model: No AI model
+   Technology: Pandas, Scikit-learn
+   Why: Tabular data analysis ke liye sirf rules aur machine learning algorithms zaruri hain, LLM ki nahi.
+
+2. Day-5 Embedding
+   Model: sentence-transformers/all-MiniLM-L6-v2
+   Technology: Sentence Transformers
+   Why: Semantic similarity aur embedding memory ke liye CPU par fast aur accurate hai.
+
+3. Interview Agent
+   Model: RAG components (FAISS, Speech-to-Text, Text-to-Speech)
+   Technology: RAG, FAISS, pypdf
+   Why: Resume context ko yaad rakhne aur naturally voice mein interact karne ke liye.
+
+4. LangChain RAG Chatbot
+   Model: SmolLM2-360M-Instruct (LLM) & BAAI/bge-small-en-v1.5 (Embeddings)
+   Technology: LangChain, FAISS
+   Why: LangChain RAG architecture ko easy banata hai, aur SmolLM2 fast instruction-following deta hai.
+
+5. Resume Analyzer
+   Model: all-MiniLM-L6-v2
+   Technology: Cosine Similarity, Sentence Transformers
+   Why: Job description aur resume ki semantic matching ke liye best aur lightweight hai.
+
+6. ResumePilot AI
+   Model: None initially (Planned for future LLM integration)
+   Technology: FastAPI (Backend), React + Tailwind (Frontend)
+   Why: Ek full-stack ATS platform banane ke liye jisme fast API aur interactive UI zaroori hai.
+
+7. Buffer Memory
+   Model: None
+   Technology: Python classes, Text persistence
+   Why: Chatbots ke liye lightweight aur simple history/memory tracking rakhne ke liye.
+
+8. PDF Summary
+   Model: Transformers-based summarization models
+   Technology: pypdf, Document chunking
+   Why: PDFs se lamba text extract karke automatically uski concise summary generate karne ke liye.
+
+9. Resume Chatbot
+   Model: Text Parsing Pipeline
+   Technology: Context retention, NLP
+   Why: Sirf resume-based Q&A ka jawab dene ke liye conversational context hold karna zaruri tha.
+
+10. Summary Memory
+    Model: facebook/bart-large-cnn
+    Technology: Transformers (Hugging Face)
+    Why: Lambe text read karke high-quality abstractive summary banane ke liye ye optimized hai.
+
+11. Summary Memory Bot
+    Model: Summarization pipeline
+    Technology: Conversational interface, Memory management
+    Why: Chat style mein interactive summaries generate karne aur pichli baatein yaad rakhne ke liye.
+
+12. Window Memory
+    Model: None
+    Technology: Sliding window memory technique
+    Why: Lamba context limit ke andar rakhne ke liye taaki purani useless history avoid ki ja sake.
+
+13. Practice AI Research Agent
+    Model: OpenAI API (e.g. Gemini / GPT models)
+    Technology: ReAct Agent Framework
+    Why: ReAct framework multiple steps ki reasoning aur autonomous tasks handle karne mein madad karta hai.
+
+14. Practice Text-to-Speech
+    Model: gTTS (Google Text-to-Speech)
+    Technology: Audio Generation
+    Why: Text input ko speech/voice output mein automatically convert karne ke liye.
+
+15. Travel Agent
+    Model: HuggingFaceTB/SmolLM2-135M-Instruct
+    Technology: RAG, ChromaDB, LangChain
+    Why: Travel dataset par directly query karne aur fast answer generate karne ke liye.
+
+16. Voice Calculator
+    Model: Qwen/Qwen2.5-0.5B-Instruct
+    Technology: SpeechRecognition, pyttsx3, Transformers
+    Why: Qwen math/logic tasks mein accha hai, aur voice tools se hands-free calculator possible hota hai.
+
+17. SmartChunk AI
+    Model: all-MiniLM-L6-v2
+    Technology: scikit-learn, FastAPI
+    Why: Sentence-level semantic chunking se paragraph ka context preserve hota hai jo better retrieval deta hai.
