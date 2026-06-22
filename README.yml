@@ -244,6 +244,86 @@ projects:
       - Generate spoken audio from text
       - Support multiple languages
 
+  - name: Travel Agent
+    path: Travel_agent/
+    purpose: RAG-based AI travel assistant for intelligent destination recommendations
+    models_and_technologies:
+      - SmolLM2-1.7B-Instruct (LLM)
+      - sentence-transformers/all-MiniLM-L6-v2 (Embeddings)
+      - ChromaDB vector store
+    why:
+      - Lightweight model with strong reasoning for travel planning
+      - Vector store enables factual grounded recommendations
+    key_features:
+      - Multi-tab interactive Streamlit dashboard
+      - Travel Q&A and personalized itineraries
+      - Machine learning cost prediction with Random Forest
+
+  - name: Voice Calculator
+    path: Voice_Calculator/
+    purpose: AI-powered voice command calculator
+    models_and_technologies:
+      - Qwen/Qwen2.5-0.5B-Instruct (LLM)
+      - SpeechRecognition
+      - pyttsx3
+    why:
+      - Fast local model evaluates mathematical intent natively on CPU/GPU
+      - Replaces brittle regex string-matching algorithms
+    key_features:
+      - Hands-free math calculations
+      - Audio commands recognition and voice output answers
+
+  - name: SmartChunk AI
+    path: smartchunk-ai/
+    purpose: Intelligent Document Parsing & Chunking Engine
+    models_and_technologies:
+      - sentence-transformers/all-MiniLM-L6-v2
+      - FastAPI (Backend)
+      - React + Vite (Frontend)
+    why:
+      - Offers fixed-size, recursive, and semantic text chunking algorithms crucial for RAG pipelines
+    key_features:
+      - Parse PDF, DOCX, DOC, TXT files
+      - Compare chunking methods visually in a glassmorphism UI
+
+  - name: Memory Engine
+    path: memory_engine/
+    purpose: Enterprise Memory Engine for AI Second Brain
+    models_and_technologies:
+      - sentence-transformers/all-MiniLM-L6-v2 (Embeddings)
+      - llama3-8b-8192 (via Groq API)
+      - FastAPI, ChromaDB
+    why:
+      - High-performance local embeddings paired with ChromaDB local persistence
+      - Groq API gives ultra-low latency conversational synthesis
+    key_features:
+      - Async PDF text extraction, hashing, and indexing
+      - Semantic search with synthesized responses
+
+  - name: Open Vision Mouse Controller
+    path: Open_Vision/mouse_controller/
+    purpose: Interactive computer vision-based virtual musical instrument
+    models_and_technologies:
+      - MediaPipe Hands tracking model
+      - OpenCV, Numpy, Sounddevice
+    why:
+      - Real-time hand landmark coordinates detection allows instant sound triggering
+    key_features:
+      - Virtual piano overlays on video stream
+      - Sine-wave sound synthesis for C, D, E, F, G, A, B notes
+
+  - name: Open Vision Web Throw
+    path: Open_Vision/Web_throw/
+    purpose: Gesture-controlled transparent desktop screen animation overlay
+    models_and_technologies:
+      - MediaPipe Hands tracking model
+      - PyQt5, OpenCV, math
+    why:
+      - Detects Spider-Man's web-shooting gesture using finger distance ratios
+    key_features:
+      - Background camera capture thread
+      - Translucent Qt window drawing expanding radial spiderwebs on top of screen coordinates
+
 architecture_patterns:
   rag:
     description: "Retrieval-Augmented Generation flow for document QA and context-aware answers."
@@ -297,6 +377,14 @@ api_usage:
       - MODEL_NAME
     default_model: gemini-2.5-flash
     notes: "This agent uses the OpenAI-compatible client for chat completions and can target any supported model via MODEL_NAME."
+  - name: Memory Engine
+    path: memory_engine/
+    api: Groq API
+    package: groq
+    environment_variables:
+      - GROQ_API_KEY
+    default_model: llama3-8b-8192
+    notes: "This API uses the Groq SDK to synthesize conversational answers."
   - name: LangChain RAG Chatbot
     path: LangChain_models/rag-chatbot/
     api: Local Hugging Face model loading
@@ -322,6 +410,12 @@ api_usage:
       - path: Resume_Analyser/main.py
         model_name: all-MiniLM-L6-v2
       - path: resume_chatbot/app.py
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+      - path: memory_engine/
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+      - path: smartchunk-ai/
+        model_name: sentence-transformers/all-MiniLM-L6-v2
+      - path: Travel_agent/
         model_name: sentence-transformers/all-MiniLM-L6-v2
     notes: "All embedding models use local Sentence Transformers loading from Hugging Face model repositories."
 
@@ -354,6 +448,29 @@ running_projects:
     Attendance Agent: |
       cd Attendece_agent
       python main.py
+    Travel Agent: |
+      cd Travel_agent
+      python ai_engine.py
+    Voice Calculator: |
+      cd Voice_Calculator
+      python calculator.py
+    SmartChunk AI: |
+      # Backend
+      cd smartchunk-ai
+      python -m uvicorn app:app --reload
+      # Frontend
+      cd smartchunk-ai/frontend
+      npm install
+      npm run dev
+    Memory Engine: |
+      cd memory_engine
+      python -m uvicorn app:app --reload
+    Virtual Piano (Open Vision Mouse Controller): |
+      cd Open_Vision/mouse_controller
+      python main.py
+    Spider-Man Web Throw (Open Vision Web Throw): |
+      cd Open_Vision/Web_throw
+      python main.py
 
 configuration_files:
   - Day-5/Embedding/config.py
@@ -373,6 +490,11 @@ project_structure:
   - pdf_summary/: PDF summarization
   - summary_memory/: Advanced memory with summaries
   - window_memory/: Sliding window memory system
+  - Travel_agent/: RAG travel assistant
+  - Voice_Calculator/: AI voice calculator
+  - smartchunk-ai/: Document parser & chunking engine
+  - memory_engine/: Enterprise memory engine API
+  - Open_Vision/: Computer vision instruments and overlays
 
 key_technologies:
   - LangChain

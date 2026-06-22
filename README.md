@@ -174,6 +174,36 @@ Below is a detailed overview of every project included in this repository. Click
 
 ---
 
+### 18. [Memory Engine](./memory_engine/)
+
+**Purpose:** Enterprise Memory Engine for AI Second Brain  
+**Models & Technologies:**
+- **Model**: `sentence-transformers/all-MiniLM-L6-v2` (Embeddings), `llama3-8b-8192` (via Groq API)
+- **Frameworks**: FastAPI, ChromaDB
+- **Why This Architecture**: High-speed local embeddings paired with ChromaDB local persistence ensure secure, private indexing, while Groq API gives ultra-low latency conversational synthesis.
+
+---
+
+### 19. [Open Vision Mouse Controller](./Open_Vision/mouse_controller/)
+
+**Purpose:** Interactive computer vision-based virtual musical instrument  
+**Models & Technologies:**
+- **Model**: MediaPipe Hands tracking model
+- **Libraries**: OpenCV, Numpy, Sounddevice
+- **Why This Architecture**: Real-time hand landmark coordinates detection allows instant sound triggering of musical tones mapped to virtual keys on screen without specialized hardware.
+
+---
+
+### 20. [Open Vision Web Throw](./Open_Vision/Web_throw/)
+
+**Purpose:** Gesture-controlled transparent desktop screen animation overlay  
+**Models & Technologies:**
+- **Model**: MediaPipe Hands tracking model
+- **Libraries**: PyQt5, OpenCV, math
+- **Why This Architecture**: Detects Spider-Man's web-shooting gesture using finger distance ratios and projects custom radial expanding spiderweb animation overlays dynamically on top of screen coordinates.
+
+---
+
 ## 🏗️ Architecture Patterns & Insights
 
 ### RAG (Retrieval-Augmented Generation)
@@ -189,7 +219,7 @@ Used heavily in projects like **RAG Chatbot**, **Interview Agent**, **Resume Ana
 
 | Model | Type | Used In | Characteristics |
 | :--- | :--- | :--- | :--- |
-| **`all-MiniLM-L6-v2`** | Embeddings | Day-5, Resume Analyzer, Travel Agent, SmartChunk AI | Lightweight (22MB), fast CPU inference, good for general similarity. |
+| **`all-MiniLM-L6-v2`** | Embeddings | Day-5, Resume Analyzer, Travel Agent, SmartChunk AI, Resume Chatbot, Memory Engine | Lightweight (22MB), fast CPU inference, good for general similarity. |
 | **`bge-small-en-v1.5`** | Embeddings | LangChain RAG Chatbot | Maximum accuracy for document retrieval. |
 | **`SmolLM2-360M`** | LLM | LangChain RAG Chatbot | Ultra-lightweight instruction-following. |
 | **`SmolLM2-1.7B`** | LLM | Travel Agent | Stronger reasoning capabilities while remaining local. |
@@ -197,7 +227,9 @@ Used heavily in projects like **RAG Chatbot**, **Interview Agent**, **Resume Ana
 | **`bart-large-cnn`** | LLM (Seq2Seq) | Summary Memory | High-quality abstractive document summarization. |
 | **`llama_cpp`** | LLM | Interview Agent | Local, privacy-first conversational capabilities. |
 | **`Qwen2.5-0.5B`** | LLM | Voice Calculator | High-speed math parsing from transcribed voice logic. |
+| **`llama3-8b-8192` (via Groq)** | LLM | Memory Engine | Cloud-hosted high-speed instruct model. |
 | **GPT-4 / Claude / Bedrock** | LLM APIs | ResumePilot AI | Complex reasoning and production-grade deployments. |
+| **MediaPipe Hands** | Gesture Tracking | Open Vision Mouse Controller, Open Vision Web Throw | Lightweight CPU-based hand tracking and landmark estimation. |
 
 ---
 
@@ -265,6 +297,24 @@ python -m uvicorn app:app --reload
 cd smartchunk-ai/frontend
 npm install
 npm run dev
+```
+
+**Memory Engine (Backend API):**
+```bash
+cd memory_engine
+python -m uvicorn app:app --reload
+```
+
+**Virtual Piano (Open Vision Mouse Controller):**
+```bash
+cd Open_Vision/mouse_controller
+python main.py
+```
+
+**Spider-Man Web Throw (Open Vision Web Throw):**
+```bash
+cd Open_Vision/Web_throw
+python main.py
 ```
 
 ---
