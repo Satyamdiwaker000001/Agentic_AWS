@@ -204,6 +204,16 @@ Below is a detailed overview of every project included in this repository. Click
 
 ---
 
+### 21. [Jarvi](./Jarvi/)
+
+**Purpose:** Gesture-controlled virtual file explorer and controller for the A: drive  
+**Models & Technologies:**
+- **Model**: MediaPipe Hands tracking model
+- **Libraries**: OpenCV, Numpy, os
+- **Why This Architecture**: Converts hand gestures (movement, pinch, fist) into navigation inputs, displaying a high-tech Jarvis hologram overlay to browse and launch files natively in the A: drive.
+
+---
+
 ## 🏗️ Architecture Patterns & Insights
 
 ### RAG (Retrieval-Augmented Generation)
@@ -229,7 +239,7 @@ Used heavily in projects like **RAG Chatbot**, **Interview Agent**, **Resume Ana
 | **`Qwen2.5-0.5B`** | LLM | Voice Calculator | High-speed math parsing from transcribed voice logic. |
 | **`llama3-8b-8192` (via Groq)** | LLM | Memory Engine | Cloud-hosted high-speed instruct model. |
 | **GPT-4 / Claude / Bedrock** | LLM APIs | ResumePilot AI | Complex reasoning and production-grade deployments. |
-| **MediaPipe Hands** | Gesture Tracking | Open Vision Mouse Controller, Open Vision Web Throw | Lightweight CPU-based hand tracking and landmark estimation. |
+| **MediaPipe Hands** | Gesture Tracking | Open Vision Mouse Controller, Open Vision Web Throw, Jarvi | Lightweight CPU-based hand tracking and landmark estimation. |
 
 ---
 
@@ -314,6 +324,12 @@ python main.py
 **Spider-Man Web Throw (Open Vision Web Throw):**
 ```bash
 cd Open_Vision/Web_throw
+python main.py
+```
+
+**Jarvi (Gesture File Explorer):**
+```bash
+cd Jarvi
 python main.py
 ```
 
