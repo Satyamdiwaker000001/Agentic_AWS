@@ -1,0 +1,8 @@
+opencv-python
+mediapipe==0.10.14
+pyautogui
+speechrecognition
+pyttsx3
+pygetwindow
+pyrect
+pyaudio

@@ -1,3 +1,7 @@
+import warnings
+# Suppress protobuf / mediapipe SymbolDatabase deprecation warnings
+warnings.filterwarnings("ignore", category=UserWarning, message=".*SymbolDatabase.GetPrototype.*")
+
 import cv2
 import mediapipe as mp
 
