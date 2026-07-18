@@ -1,0 +1,6 @@
+services:
+  organizer-agent:
+    build: .
+    container_name: organizer-agent
+    ports:
+      - "8000:8000"

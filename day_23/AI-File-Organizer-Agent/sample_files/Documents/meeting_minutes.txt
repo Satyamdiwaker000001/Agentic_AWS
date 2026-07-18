@@ -1,0 +1,5 @@
+Project Meeting
+
+Deadline: Friday
+
+Deploy on Docker

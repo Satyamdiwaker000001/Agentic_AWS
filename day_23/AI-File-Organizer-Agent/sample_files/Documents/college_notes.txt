@@ -1,0 +1,6 @@
+DBMS Notes
+
+Normalization
+BCNF
+Transactions
+Locks

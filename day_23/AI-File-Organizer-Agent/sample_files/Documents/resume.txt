@@ -1,0 +1,5 @@
+Satyam Diwaker
+Python Developer
+React
+FastAPI
+Docker

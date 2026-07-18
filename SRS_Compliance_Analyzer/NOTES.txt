@@ -1,0 +1,159 @@
+================================================================================
+LINE-BY-LINE CODE EXPLANATION & LEARNING NOTES
+================================================================================
+
+This document provides a detailed, line-by-line explanation of the entire Offline 
+SRS Compliance Analyzer application. Use this guide to understand the coding 
+patterns, logic, and python-docx/NLP libraries used.
+
+--------------------------------------------------------------------------------
+1. FILE PARSER: parser.py
+--------------------------------------------------------------------------------
+
+This module handles extracting text and tables from uploaded files.
+
+[Imports & Utilities]
+* import os: Used to verify file existence on disk (os.path.exists) and separate 
+  file extensions (os.path.splitext).
+* import re: Python's regular expressions library, used to identify heading 
+  formats (e.g., "1.1 Purpose").
+* from pypdf import PdfReader: Third-party library to extract text page-by-page 
+  from PDF files.
+* from docx import Document: From python-docx, used to load and parse Microsoft 
+  Word (.docx) files.
+
+[PDF & TXT Extractor Functions]
+* extract_text_from_pdf(filepath):
+  - Creates a PdfReader instance.
+  - Iterates over reader.pages, calling page.extract_text().
+  - Joins the text of all pages with newlines.
+* extract_text_from_txt(filepath):
+  - Tries multiple encodings (utf-8, latin-1, cp1252) sequentially in a 
+    try-except block to read raw text without decoding crashes.
+
+[Microsoft Word (.docx) Block Parser]
+This is the most critical function. Standard docx parsers read paragraphs and 
+tables separately, destroying their sequence. We traverse the underlying XML 
+body to preserve ordering:
+
+* for child in doc.element.body:
+  - Loop over every top-level node in the document's XML hierarchy.
+* if isinstance(child, CT_P):
+  - If the node is a paragraph element (CT_P):
+  - para = Paragraph(child, doc): Instantiates a python-docx Paragraph object 
+    around the XML element.
+  - text = para.text.strip(): Extracts paragraph text.
+  - is_head = (para.style and para.style.name and para.style.name.startswith("Heading")) 
+    or bool(heading_regex.match(text)):
+    - Checks if the paragraph has a "Heading" style, or matches the pattern 
+      "1.1 Section Title".
+  - If it is a heading, we update current_heading and append a block of type 
+    "heading".
+  - If not, we append a block of type "paragraph" and link it to the 
+    current_heading.
+* elif isinstance(child, CT_Tbl):
+  - If the node is a table element (CT_Tbl):
+  - table = Table(child, doc): Instantiates a python-docx Table object.
+  - We loop through table.rows and cells (row.cells).
+  - cleaned_cells = []: Merged cells in Word repeat the same text. We filter 
+    duplicates by checking if the current cell text matches the previous one.
+  - headers = [c.lower() for c in cleaned_cells]: If it is the first row 
+    (r_idx == 0), we save the lowercase cell values as column headers.
+  - Appends a block of type "table" with its content formatted as markdown 
+    rows (" | ".join(...)), linked to the preceding heading.
+
+
+--------------------------------------------------------------------------------
+2. STANDARDS CONFIGURATION: standards.py
+--------------------------------------------------------------------------------
+
+This file is a data configuration dictionary defining what a compliant SRS looks like.
+
+* STANDARDS Dictionary:
+  - Keyed by standard ID: "IEEE-830-1998" (classic) and 
+    "ISO-IEC-IEEE-29148-2018" (modern).
+  - Each standard contains a title, description, and a list of sections to 
+    search for.
+* Section Configuration Dicts:
+  - id: The section number (e.g., "1.1"). Used for matching.
+  - name: The formal section name (e.g., "Purpose").
+  - required: Boolean indicating if this section is mandatory.
+  - weight: Numerical impact (1-5) on the overall compliance score.
+  - keywords: Keywords related to the section (e.g. ['scope', 'boundaries']).
+  - anchors: Short semantic descriptions of the expected content. The analyzer 
+    feeds these anchors into the SentenceTransformer model to calculate semantic 
+    similarities.
+  - aliases: Alternate names for the section (e.g. "Product Perspective" maps 
+    to "System Context", "Perspective", or "Context").
+
+
+--------------------------------------------------------------------------------
+3. NLP COMPLIANCE ENGINE: analyzer.py
+--------------------------------------------------------------------------------
+
+This engine checks regex headers, matches aliases, processes semantic similarities, 
+and flags placeholders.
+
+[Lazy-Loading Model]
+* @property def model(self):
+  - Loads the SentenceTransformer("all-MiniLM-L6-v2") only when first called. 
+    This saves Streamlit from re-importing torch/transformers on every user click, 
+    making page refreshes run in 0.0 seconds.
+
+[Heading Regex Matcher]
+* check_regex_match(section, blocks):
+  - Prepares regex patterns using re.escape(sec_id).
+  - Option A (Strict ID + Alias): Checks if any heading block starts with the 
+    section ID followed by the name or one of its aliases (e.g. ^1\.2[\.\s\-]+Scope).
+  - Option B (Loose Alias Match): Checks if the heading text matches the alias 
+    exactly, ignoring case (e.g., "System Context").
+
+[Compliance Audit Pipeline: analyze_compliance]
+* Embedding Generation:
+  - Extracts the text of all paragraph and table blocks (content_texts).
+  - para_embeddings = self.model.encode(content_texts): Generates 384-dimensional 
+    vector embeddings for the document paragraphs.
+* Match Loop:
+  - Iterates over each section in the standard.
+  - Runs check_regex_match. If a header matches, it sets status to "Matched".
+* Semantic Fallback (Cosine Similarity):
+  - If regex check fails, we compute embeddings for the section's anchors list.
+  - cosine_similarity(anchor_embeddings, para_embeddings): Computes the angle 
+    similarity between the anchor phrases and all document content blocks.
+  - If the highest similarity score is >= 0.42, we declare a "Semantic Match".
+* Requirements Table Score Boost:
+  - If a section belongs to Detailed Requirements (starts with "3") and is linked 
+    to a table containing requirement indicators (ID, Requirement, Priority), 
+    we force its status to "Matched".
+* Context-Aware Placeholders:
+  - Searches for keywords like TODO or TBD.
+  - If the section heading is whitelisted (e.g., "Open Items"), it is skipped.
+  - Otherwise, it warning-flags only the specific line containing the placeholder.
+* Score Calculation:
+  - Sums up the weights of all Matched sections (100% weight) and Weak sections 
+    (40% weight) divided by total possible weight.
+
+
+--------------------------------------------------------------------------------
+4. UI DASHBOARD: app.py
+--------------------------------------------------------------------------------
+
+Renders the visual interface in Streamlit.
+
+* Theme Configuration:
+  - Injected CSS via st.markdown("<style>...", unsafe_allow_html=True) to force a 
+    corporate Light Theme (slate grey headers #F1F5F9, card borders, off-white 
+    background #F8FAFC, dark text #1E293B).
+* Control Center sidebar:
+  - Selects standard definition.
+  - generate_srs_template(selected_standard_id): Generates a blank markdown starter 
+    skeleton of the selected standard, allowing users to download it.
+* File Upload Handler:
+  - tempfile.NamedTemporaryFile: Writes the uploaded streamlit memory file uploader 
+    to a temporary file on disk so python-docx can parse it.
+* Results Rendering:
+  - Renders compliance score in a premium dashboard card.
+  - st.tabs: Creates separate tabs for the Section Audit Table and the 
+    Compliance Action Plan.
+  - st.write(df.to_html(escape=False)): Renders the structured audit table with 
+    HTML badges and status markers.

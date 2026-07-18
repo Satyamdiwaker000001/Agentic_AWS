@@ -1,0 +1,5 @@
+Invoice #1024
+
+Customer: ABC Pvt Ltd
+
+Total Amount: ₹15,000
