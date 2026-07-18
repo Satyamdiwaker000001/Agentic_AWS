@@ -1,0 +1,239 @@
+/* CSS reset and base styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+    color: #1a1a1a;
+}
+
+/* Hide Streamlit Default UI Elements */
+#MainMenu {visibility: hidden;}
+header {visibility: hidden;}
+footer {visibility: hidden;}
+.stDeployButton {display: none;}
+
+/* Full page layout background */
+.stApp {
+    background: #f5f4ef !important;
+}
+
+/* Adjust top padding and max-width */
+.block-container {
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    max-width: 1400px !important;
+}
+
+/* Main inner container (white box like the CV builder) */
+.main-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    overflow: hidden;
+    min-height: 80vh;
+}
+
+/* Navbar */
+.custom-navbar {
+    background-color: #1b2118;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+}
+
+.custom-navbar h2 {
+    color: white !important;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.nav-center .search-bar {
+    background-color: #2b3327;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    width: 300px;
+}
+.nav-center input {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    outline: none;
+    font-size: 0.9rem;
+}
+.nav-center input::placeholder {
+    color: #a0a69d;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.preview-mode {
+    font-size: 0.9rem;
+    color: #a0a69d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.toggle-switch {
+    width: 30px;
+    height: 16px;
+    background: #3b4337;
+    border-radius: 10px;
+    position: relative;
+}
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #a0a69d;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+}
+.download-btn {
+    background-color: #a3d95b;
+    color: #1b2118;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+    background: #d1d5db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Right Sidebar Overview Panel */
+.overview-panel {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-left: 1px solid #f0f0f0;
+    height: 100%;
+}
+.overview-panel h3 {
+    margin-top: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111;
+}
+
+/* Score ring mock (CSS based) */
+.score-ring {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 10px solid #f0f0f0;
+    border-top-color: #7bc62d; /* Green */
+    border-right-color: #7bc62d; 
+    border-bottom-color: #7bc62d; 
+    margin: 2rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111;
+}
+
+/* Grid metric cards */
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+.mini-metric-card {
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 1rem;
+}
+.mini-metric-card .label {
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.mini-metric-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.badge-tag {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.tag-excellent { background: #eef9e7; color: #52a31d; }
+.tag-good { background: #eef9e7; color: #52a31d; }
+.tag-average { background: #fff4e6; color: #e67e22; }
+
+/* List items for detailed breakdown */
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+    color: #333;
+}
+.list-item:last-child { border-bottom: none; }
+.list-item .score { color: #52a31d; font-weight: 600; }
+
+/* Content sections */
+.section-header {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #111;
+}
+.section-sub {
+    color: #7bc62d;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.section-body {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Outlined buttons */
+.btn-outline {
+    border: 1px solid #7bc62d;
+    color: #111;
+    background: transparent;
+    border-radius: 20px;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+.btn-outline:hover {
+    background: #f7fcf3;
+}

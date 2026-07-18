@@ -1,0 +1,5 @@
+Install the package using: pip install langchain-openai
+Import FAISS from langchain_community.vectorstores
+Reduce batch size or use CPU
+Start the server and verify the host/port
+Verify the file path and that the file exists

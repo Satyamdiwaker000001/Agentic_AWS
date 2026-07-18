@@ -1,0 +1,5 @@
+ModuleNotFoundError: No module named 'langchain_openai'
+ImportError: cannot import name FAISS
+CUDA out of memory
+ConnectionRefusedError
+FileNotFoundError

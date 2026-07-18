@@ -1,0 +1,16 @@
+langchain
+langchain-community
+langchain-core
+langchain-huggingface
+
+sentence-transformers
+faiss-cpu
+
+transformers
+torch
+accelerate
+
+huggingface-hub
+
+numpy
+pypdf

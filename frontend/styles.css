@@ -1,0 +1,73 @@
+/* ==== Global Theme ==== */
+:root {
+  --primary-hue: 220; /* blue */
+  --primary-saturation: 60%;
+  --primary-light: 50%;
+  --gradient-start: hsl(var(--primary-hue), var(--primary-saturation), 45%);
+  --gradient-end: hsl(var(--primary-hue), var(--primary-saturation), 65%);
+  --bg-light: #F0F4FF;
+  --bg-dark: #1A1B2A;
+  --text-light: #1E293B;
+  --text-dark: #E5E7EB;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  margin: 0;
+  padding: 0;
+  color: var(--text-light);
+}
+
+/* ==== Glass Card ==== */
+.card {
+  background: rgba(255,255,255,0.12);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1.5rem;
+}
+.card:hover { transform: translateY(-4px); }
+
+/* ==== Dark Mode ==== */
+[data-theme='dark'] {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* ==== Top Navigation ==== */
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+.top-nav h1 { margin: 0; font-size: 1.8rem; color: #fff; }
+
+/* ==== Search Bar ==== */
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+/* ==== Floating Chat Widget ==== */
+.chat-widget {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 350px;
+  max-height: 500px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 1rem;
+  overflow-y: auto;
+}
